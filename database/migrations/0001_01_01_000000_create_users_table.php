@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
+            $table->string('role')->default('user'); // قيمته user أو admin
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
