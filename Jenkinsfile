@@ -1,10 +1,11 @@
 pipeline {
     agent any
 
-    environment {
-        COMPOSER_HOME = "${env.WORKSPACE}/composer"
-        PATH = "C:\\xampp\\php;${env.PATH}" // PHP موجود بالمسار
-    }
+environment {
+    COMPOSER_HOME = "${env.WORKSPACE}/composer"
+    PATH = "C:\\xampp\\php;C:\\Users\\jenkins-user\\AppData\\Roaming\\Composer\\vendor\\bin;${env.PATH}"
+}
+
 
     options {
         buildDiscarder(logRotator(numToKeepStr: '10')) // يحفظ آخر 10 Builds
@@ -63,7 +64,6 @@ pipeline {
                 echo '⚡ Optimizing autoload & config...'
                 bat 'composer dump-autoload -o'
                 bat 'php artisan optimize'
-                bat 'composer install --no-interaction --prefer-dist '
             }
         }
 
