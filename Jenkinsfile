@@ -63,7 +63,7 @@ pipeline {
                 echo '⚡ Optimizing autoload & config...'
                 bat 'composer dump-autoload -o'
                 bat 'php artisan optimize'
-                bat '''composer install --no-interaction --prefer-dist '''
+                bat 'composer install --no-interaction --prefer-dist '
             }
         }
 
