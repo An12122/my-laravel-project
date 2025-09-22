@@ -1,0 +1,62 @@
+name: Laravel CI/CD Workflow with Email Notifications
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1️⃣ جلب الكود من GitHub
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2️⃣ إعداد PHP
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.2'
+        extensions: mbstring, bcmath, sqlite
+
+    # 3️⃣ تثبيت Composer dependencies
+    - name: Install Composer Dependencies
+      run: composer install --prefer-dist --no-progress --no-suggest
+
+    # 4️⃣ إعداد Laravel environment
+    - name: Setup Laravel Environment
+      run: |
+        cp .env.example .env
+        php artisan key:generate
+        php artisan config:cache
+
+    # 5️⃣ تشغيل الاختبارات
+    - name: Run Tests
+      run: php artisan test --no-interaction --verbose
+
+    # 6️⃣ Build Frontend
+    - name: Install Node.js & Build Frontend
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+    - run: |
+        npm install
+        npm run build
+
+    # 7️⃣ إرسال إشعار بالبريد الإلكتروني
+    - name: Send Email Notification
+      if: always()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: mysccounts72@gmail.com
+        password: ${{ secrets.GMAIL_APP_PASSWORD }}
+        subject: "Build ${{ github.workflow }} #${{ github.run_number }} - ${{ job.status }}"
+        body: "Build URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\nStatus: ${{ job.status }}"
+        to: mysccounts72@gmail.com
+        from: mysccounts72@gmail.com
+        secure: true
