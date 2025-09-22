@@ -3,12 +3,12 @@ pipeline {
 
     environment {
         COMPOSER_HOME = "${env.WORKSPACE}\\composer"
-        PATH = "${env.PATH};C:\\xampp\\php" // عشان php و composer يشتغلوا
+        PATH = "C:\\xampp\\php;${env.PATH}" // يضمن أن PHP موجود
     }
 
     options {
-        buildDiscarder(logRotator(numToKeepStr: '10'))
-        disableConcurrentBuilds()
+        buildDiscarder(logRotator(numToKeepStr: '10')) // يحفظ آخر 10 Builds
+        disableConcurrentBuilds() // يمنع تشغيل Builds متزامنة
     }
 
     stages {
@@ -16,7 +16,7 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 echo '🧹 Cleaning workspace...'
-                deleteDir()
+                deleteDir() // يمسح كل الملفات القديمة
             }
         }
 
