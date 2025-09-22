@@ -2,13 +2,12 @@ pipeline {
     agent any
 
     environment {
-        COMPOSER_HOME = "${env.WORKSPACE}/composer"
+        COMPOSER_HOME = "${env.WORKSPACE}\\composer"
+        PATH = "${env.PATH};C:\\xampp\\php" // عشان php و composer يشتغلوا
     }
 
     options {
-        // يحفظ 10 Builds الأخيرة فقط لتوفير المساحة
         buildDiscarder(logRotator(numToKeepStr: '10'))
-        // يمنع Build متوازي لنفس المشروع
         disableConcurrentBuilds()
     }
 
@@ -17,7 +16,7 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 echo '🧹 Cleaning workspace...'
-                deleteDir() // يمسح كل الملفات القديمة
+                deleteDir()
             }
         }
 
