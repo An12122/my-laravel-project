@@ -10,7 +10,7 @@
 <body class="bg-gradient-to-b from-[#195233] via-[#9ef8d0] to-white min-h-screen flex items-center justify-center">
 
     <div class="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center">
-        <h1 class="text-3xl font-extrabold text-[#195233] mb-6">مرحبًا بك في منصة نور التعليمية لتطوير المهارات</h1>
+        <h1 class="text-3xl font-extrabold text-[#195233] mb-6">مرحبًا بك في منصة تطوير المهارات</h1>
         <p class="mb-6 text-[#195233] font-medium">اختر أحد الخيارات للمتابعة</p>
 
         <div class="flex flex-col gap-4">

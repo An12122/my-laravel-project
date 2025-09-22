@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* ألوان مخصصة */
+:root {
+    --primary-color: #195233;
+    --secondary-color: #9ef8d0;
+}
+
