@@ -1,15 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        // PATH to PHP إذا لازم، مثال:
-        PATH = "${env.PATH};C:\\php"
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/An12122/my-laravel-project.git', branch: 'main'
+                git branch: 'main', url: 'https://github.com/An12122/my-laravel-project.git'
             }
         }
 
@@ -19,29 +14,22 @@ pipeline {
             }
         }
 
-        stage('Database Migration') {
-            steps {
-                bat 'php artisan migrate --force'
-            }
-        }
-
         stage('Run Tests') {
             steps {
-                bat 'php artisan test'
+                bat 'vendor\\bin\\phpunit'
             }
         }
 
         stage('Build/Deploy') {
             steps {
-                echo 'Build/Deploy steps go here'
-                // هنا ممكن تضيف أي أوامر نشر أو نسخ الملفات للخادم
+                echo '✅ Build/Deploy stage executed'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build نجح!'
+            echo '✅ Build ناجح!'
         }
         failure {
             echo '❌ Build فشل!'
